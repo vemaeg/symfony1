@@ -75,7 +75,9 @@ class sfWebRequest extends sfRequest
     parent::initialize($dispatcher, $parameters, $attributes, $options);
 
     // GET parameters
-    $this->getParameters = get_magic_quotes_gpc() ? sfToolkit::stripslashesDeep($_GET) : $_GET;
+    // REMARK: Since PHP 5.4 get_magic_quotes_gpc always returns false... Since 7.4 it's deprecated.
+    //$this->getParameters = get_magic_quotes_gpc() ? sfToolkit::stripslashesDeep($_GET) : $_GET;
+    $this->getParameters = $_GET;
     $this->parameterHolder->add($this->getParameters);
 
     $postParameters = $_POST;
@@ -148,7 +150,9 @@ class sfWebRequest extends sfRequest
       $this->setMethod(self::GET);
     }
 
-    $this->postParameters = get_magic_quotes_gpc() ? sfToolkit::stripslashesDeep($postParameters) : $postParameters;
+    // REMARK: Since PHP 5.4 get_magic_quotes_gpc always returns false... Since 7.4 it's deprecated.
+    //$this->postParameters = get_magic_quotes_gpc() ? sfToolkit::stripslashesDeep($postParameters) : $postParameters;
+    $this->postParameters = $postParameters;
     $this->parameterHolder->add($this->postParameters);
 
     if ($formats = $this->getOption('formats'))
@@ -600,7 +604,9 @@ class sfWebRequest extends sfRequest
 
     if (isset($_COOKIE[$name]))
     {
-      $retval = get_magic_quotes_gpc() ? sfToolkit::stripslashesDeep($_COOKIE[$name]) : $_COOKIE[$name];
+      // REMARK: Since PHP 5.4 get_magic_quotes_gpc always returns false... Since 7.4 it's deprecated.
+      //$retval = get_magic_quotes_gpc() ? sfToolkit::stripslashesDeep($_COOKIE[$name]) : $_COOKIE[$name];
+      $retval = $_COOKIE[$name];
     }
 
     return $retval;
