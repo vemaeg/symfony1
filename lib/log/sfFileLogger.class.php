@@ -22,86 +22,7 @@ class sfFileLogger extends sfLogger
     $type       = 'symfony',
     $format     = '%time% %type% [%priority%] %message%%EOL%',
     $timeFormat = '%b %d %H:%M:%S',
-    $fp         = null,
-    $formatMap  = array(
-      // abbreviated weekday name
-      '%a' => 'D',
-      // full weekday name
-      '%A' => 'l',
-      // abbreviated month name
-      '%b' => 'M',
-      // full month name
-      '%B' => 'F',
-      // preferred date and time representation
-      // FIXME: How to get the preferred intl format?
-      '%c' => 'Y-m-d H:i:s',
-      // century number (the year divided by 100, range 00 to 99)
-      // FIXME: format() does not support century.
-      '%C' => '',
-      // day of the month (01 to 31)
-      '%d' => 'd',
-      // same as %m/%d/%y
-      '%D' => 'm/d/y',
-      // day of the month (1 to 31)
-      '%e' => 'j',
-      // like %G, but without the century
-      // FIXME: format() does not support the ISO week number without century.
-      '%g' => '',
-      // 4-digit year corresponding to the ISO week number (see %V).
-      '%G' => 'o',
-      // same as %b
-      '%h' => 'M',
-      // hour, using a 24-hour clock (00 to 23)
-      '%H' => 'H',
-      // hour, using a 12-hour clock (01 to 12)
-      '%I' => 'h',
-      // day of the year (001 to 366)
-      // FIXME: format() starts at 0
-      '%j' => 'z',
-      // month (01 to 12)
-      '%m' => 'm',
-      // minute
-      '%M' => 'i',
-      // newline character
-      '%n' => PHP_EOL,
-      // either am or pm according to the given time value
-      '%p' => 'a',
-      // time in a.m. and p.m. notation
-      '%r' => 'h:i:s A',
-      // time in 24 hour notation
-      '%R' => 'H:i:s',
-      // second
-      '%S' => 's',
-      // tab character
-      '%t' => "\t",
-      // current time, equal to %H:%M:%S
-      '%T' => '%H:i:s',
-      // weekday as a number (1 to 7), Monday=1. Warning: In Sun Solaris Sunday=1
-      '%u' => 'N',
-      // week number of the current year, starting with the first Sunday as the first day of the first week
-      // FIXME: format() does not support the week number starting on sunday.
-      '%U' => '',
-      // The ISO 8601 week number of the current year (01 to 53), where week 1 is the first week that has at least 4 days in the current year, and with Monday as the first day of the week
-      // FIXME: same as %W?
-      '%V' => 'W',
-      // week number of the current year, starting with the first Monday as the first day of the first week
-      '%W' => 'W',
-      // day of the week as a decimal, Sunday=0
-      '%w' => 'w',
-      // preferred date representation without the time
-      '%x' => 'Y-m-d',
-      // preferred time representation without the date
-      '%X' => 'H:i:s',
-      // year without a century (range 00 to 99)
-      '%y' => 'y',
-      // year including the century
-      '%Y' => 'Y',
-      // time zone or name or abbreviation
-      '%Z' => 'Z',
-      '%z' => 'Z',
-      // a literal % character
-      '%%' => '%',
-    );
+    $fp         = null;
 
   /**
    * Initializes this logger.
@@ -179,7 +100,7 @@ class sfFileLogger extends sfLogger
     fwrite($this->fp, strtr($this->format, array(
       '%type%'     => $this->type,
       '%message%'  => $message,
-      '%time%'     => date($this->convertStrftimeToDateFormat($this->timeFormat)),
+      '%time%'     => strftime($this->timeFormat),
       '%priority%' => $this->getPriority($priority),
       '%EOL%'      => PHP_EOL,
     )));
