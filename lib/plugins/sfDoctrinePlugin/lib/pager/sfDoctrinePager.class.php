@@ -52,9 +52,7 @@ class sfDoctrinePager extends sfPager implements Serializable
    */
   public function serialize()
   {
-    $vars = get_object_vars($this);
-    unset($vars['query']);
-    return serialize($vars);
+    return serialize($this->__serialize());
   }
 
   /**
@@ -64,14 +62,24 @@ class sfDoctrinePager extends sfPager implements Serializable
    */
   public function unserialize($serialized)
   {
-    $array = unserialize($serialized);
+    $this->__unserialize(unserialize($serialized));
+  }
 
+  public function __serialize()
+  {
+    $vars = get_object_vars($this);
+    unset($vars['query']);
+    return $vars;
+  }
+
+  public function __unserialize(array $array)
+  {
     foreach ($array as $name => $values)
     {
       $this->$name = $values;
     }
 
-    $this->tableMethodCalled = false; 
+    $this->tableMethodCalled = false;
   }
 
   /**
