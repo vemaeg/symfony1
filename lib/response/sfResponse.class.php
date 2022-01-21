@@ -156,7 +156,7 @@ abstract class sfResponse implements Serializable
    */
   public function serialize()
   {
-    return serialize($this->content);
+    return serialize($this->__serialize());
   }
 
   /**
@@ -169,6 +169,18 @@ abstract class sfResponse implements Serializable
    */
   public function unserialize($serialized)
   {
-    $this->content = unserialize($serialized);
+    $this->__unserialize(unserialize($serialized));
   }
+
+  public function __serialize()
+  {
+    return $this->content;
+  }
+
+  public function __unserialize(array $data)
+  {
+    $this->content = $data;
+  }
+
+
 }
