@@ -873,6 +873,13 @@ class sfWebRequest extends sfRequest
   static protected function fixPhpFilesArray(array $data)
   {
     $fileKeys = array('error', 'name', 'size', 'tmp_name', 'type');
+
+    // Im "offiziellen" Repo wird derzeit versucht, full_path durchzuschleifen... In unsrem Fall schmeissen wir
+    // es einfach mal weg, damit der Rest klappt.
+    if (isset($data['full_path'])) {
+      unset($data['full_path']);
+    }
+
     $keys = array_keys($data);
     sort($keys);
 
