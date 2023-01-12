@@ -3,7 +3,7 @@
 /*
  * This file is part of the symfony package.
  * (c) Fabien Potencier <fabien.potencier@symfony-project.com>
- * 
+ *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
@@ -69,7 +69,7 @@ class sfWidgetFormInputCheckbox extends sfWidgetFormInput
    */
   public function render($name, $value = null, $attributes = array(), $errors = array())
   {
-    if (null !== $value && $value !== false)
+    if (null !== $value && $value !== false && $value !== '0' && $value !== 0)
     {
       $attributes['checked'] = 'checked';
     }
